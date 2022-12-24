@@ -101,5 +101,4 @@ module.exports.logout_get = (req , res) => {
   res.cookie('jwt' , '' , {maxAge:1/** ms */})
   // redirectto home page , once it is logged out
   res.redirect('/');
-
 }
