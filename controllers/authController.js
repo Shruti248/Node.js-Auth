@@ -8,6 +8,16 @@ const handleErros = (err) => {
 
   let errors = { email: "", password: "" };
 
+  //   incorrect error
+  if(err.message === 'Incorrect Email'){
+    errors.email = 'Email is not registered';
+  }
+
+//   incorrect password 
+  if(err.message === 'Incorrect Password'){
+    errors.password = 'Incorrect password';
+  }
+
   // duplicate error.code
   if (err.code == 11000) {
     errors.email = "Email is already registered";
@@ -35,7 +45,7 @@ const handleErros = (err) => {
 const maxAge = 3 * 24 * 60 * 60; //3 days in seconds
 
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.secret , {
+  return jwt.sign({ id }, process.env.secret, {
     expiresIn: maxAge,
   });
 };
@@ -56,8 +66,11 @@ module.exports.signup_post = async (req, res) => {
     });
 
     const token = createToken(user._id);
-    res.cookie('jwt' , token , {httpOnly : true , maxAge : maxAge/**in seconds */*1000/**cookies are in ms */})
-    res.status(201).json({ user : user._id });
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: maxAge /**in seconds */ * 1000 /**cookies are in ms */,
+    });
+    res.status(201).json({ user: user._id });
   } catch (err) {
     const errors = handleErros(err);
     res.status(400).json({ errors });
@@ -65,5 +78,17 @@ module.exports.signup_post = async (req, res) => {
 };
 module.exports.login_post = async (req, res) => {
   const { email, password } = req.body;
-  res.send("User login ");
+
+  try {
+    const user = await User.login(email, password);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: maxAge /**in seconds */ * 1000 /**cookies are in ms */,
+    });
+    res.status(200).json({ user: user._id });
+  } catch (err) {
+    const errors = handleErros(err);
+    res.status(400).json({errors});
+  }
 };

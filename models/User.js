@@ -52,6 +52,23 @@ userSchema.pre('save' , async function(next){
     next();
 })
 
+// statis method to login user
+userSchema.statics.login = async function(email , password){
+    const user = await this.findOne({email});
+
+    if(user){
+        // user enters the text password , need to convert into a hashed password, so that the hashed passwords in db can be campared
+        const auth = await bcrypt.compare(password , user.password);
+
+        // if passwords matched
+        if(auth){
+          return user;
+        }
+        throw Error('Incorrect Password')
+    }
+    throw Error('Incorrect Email')
+}
+
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;
