@@ -11,11 +11,13 @@
     <form class="p-3 mt-3">
         <div class="form-field d-flex align-items-center">
             <span class="far fa-user"></span>
-            <input type="text" name="userName" id="userName" placeholder="Username or Email">
+            <input type="text" name="email" id="userName" placeholder="Email">
+            <div class="email error"></div>
         </div>
         <div class="form-field d-flex align-items-center">
             <span class="fas fa-key"></span>
             <input type="password" name="password" id="pwd" placeholder="Password">
+            <div class="password error"></div>
         </div>
         <button class="btn mt-3">Login</button>
     </form>
@@ -23,6 +25,21 @@
         <a href="#">Forget password?</a> or <a href="#">Sign up</a>
     </div>
 </div>
+
+<script>
+    const form = document.querySelector('form');
+  
+    form.addEventListener('submit' , (e) => {
+      e.preventDefault();  //prevent default action for refeshing the page
+  
+      // get the values
+      const email = form.email.value;
+      const password = form.password.value;
+  
+      console.log(email , password);
+  
+    })
+</script>
 
 <%- include ('partials/footer') %>
 
