@@ -92,3 +92,14 @@ module.exports.login_post = async (req, res) => {
     res.status(400).json({errors});
   }
 };
+
+
+module.exports.logout_get = (req , res) => {
+  //delete the jwt cookie to log out -- this cannot be done
+  // therefore -- replace it with the blank cookie and very short expiry date
+
+  res.cookie('jwt' , '' , {maxAge:1/** ms */})
+  // redirectto home page , once it is logged out
+  res.redirect('/');
+
+}

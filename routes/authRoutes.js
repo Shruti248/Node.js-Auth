@@ -30,6 +30,6 @@ router.post("/login", authController.login_post);
  * GET - /logout
  * Log out a user
  */
-router.get("/logout", () => {});
+router.get("/logout", authController.logout_get);
 
 module.exports = router;
