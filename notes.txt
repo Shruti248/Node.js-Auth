@@ -5,3 +5,7 @@ AUth Routes
 /signup POST  Create a new user in db
 /login  POST authenticate a current user
 /logout  GET log a user out
+
+
+COOKIES
+-Store data in a user's browser
