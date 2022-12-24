@@ -9,3 +9,18 @@ AUth Routes
 
 COOKIES
 -Store data in a user's browser
+
+JSON WEB TOKENS
+User logs in the web form and sends a request to the server(say credentials like email passwords)
+The server then checks the credentials against those stored in the db for that user
+Now , if they are correct -- the server then creates a json web token for that user , and sends it back to the browser where it is stored as a cookie
+jwt contains the encoded data about that user to identify them
+So as long as they have this jwt in the cookie , then they are considered logged in and authenticated
+Now the user has this jwt , stored in the cookie in the web browser
+REMEMBER : Cookies are sent to the server by the browser for every request they make
+So when the server gets the token from the cookie in the request , tehy can verify it and decode it to identify the user...
+Now if it is verifed to be the valid token , user can be seen logged in by the server and the server can decide to show the user protected data or pages which require the user to be authenticated 
+if the token is not valid -- server can send errors or direct them to the login page or something
+
+
+Refer : https://www.youtube.com/watch?v=LZq0G8WUaII&list=PL4cUxeGkcC9iqqESP8335DA5cRFp8loyp&index=10
