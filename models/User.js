@@ -21,6 +21,26 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Mongoose hook is a special function that fires after a certian mongoose event happens. 
+// Eg : a mongoose hoook that is fired after the doc is saved , deleted to db 
+
+// fire a function after(post) the doc is saved to db
+userSchema.post('save' , function(doc , next){
+    console.log('New User was created and saved' , doc);
+    next();
+})
+
+// fire a function before(pre) the doc is saved to db
+userSchema.pre('save' , function(next) {
+    // this : will create local instance before it is saved to db 
+    console.log('User about to be created & saved' , this);
+    next();
+})
+
+// The pre hook is used to hash the passwords before it is saved to the db 
+// Refer : https://dev.to/sahilthakur7/pre-and-post-hooks-in-mongoose-16be
+
+
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;
